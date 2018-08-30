@@ -122,3 +122,4 @@ STATIC_URL = '/static/'
 
 AWS_ACCESS_KEY='xxx'
 AWS_SECRET_KEY='xxx'
+EMAIL_BACKEND = 'django_ses.SesBackend'
