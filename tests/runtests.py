@@ -13,7 +13,7 @@ def start(argv=None):
         argv = [
             "nosetests", "--cover-branches", "--with-coverage",
             "--cover-erase", "--verbose",
-            "--cover-package=django_foobar",
+            "--cover-package=django_ses",
         ]
 
     nose.run_exit(argv=argv, defaultTest=os.path.abspath(os.path.dirname(__file__)))

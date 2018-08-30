@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from django_ses.views import DeepThoughtView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('deepthought/', view=DeepThoughtView.as_view(), name='django_deepthought'),
 ]
