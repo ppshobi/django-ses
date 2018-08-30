@@ -31,13 +31,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_ses',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_ses',
 ]
 
 MIDDLEWARE = [
@@ -120,6 +120,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+EMAIL_BACKEND = 'django_ses'
 AWS_ACCESS_KEY='xxx'
 AWS_SECRET_KEY='xxx'
-EMAIL_BACKEND = 'django_ses.SesBackend'
+AWS_REGION_NAME='us-east-1'
