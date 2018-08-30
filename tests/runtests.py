@@ -15,7 +15,6 @@ def start(argv=None):
             "--cover-erase", "--verbose",
             "--cover-package=django_ses",
         ]
-
     nose.run_exit(argv=argv, defaultTest=os.path.abspath(os.path.dirname(__file__)))
 
 if __name__ == "__main__":
