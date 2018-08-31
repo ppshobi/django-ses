@@ -2,10 +2,12 @@ import boto3
 from botocore.exceptions import ClientError
 from django.conf import settings
 from django.core import mail
-from django.core.mail import EmailMessage, send_mail
+from django.core.mail import EmailMessage
+from django.core.mail.backends.base import BaseEmailBackend
 from django.test import TestCase
 from moto import mock_ses
-from moto.ses.exceptions import MessageRejectedError
+
+import django_ses
 
 
 class SesEmail(TestCase):
@@ -39,8 +41,11 @@ class SesEmail(TestCase):
         except ClientError as e:
             self.fail("it raised error even when fail silently is used")
 
+    def test_it_can_return_an_email_backend(self):
+        self.assertTrue(isinstance(django_ses.SesBackend(), BaseEmailBackend))
+
     def create_email(self):
-        email1 = EmailMessage(
+        return EmailMessage(
             'Subject 1',
             'Body1 goes here',
             'from1@example.com',
@@ -48,7 +53,5 @@ class SesEmail(TestCase):
             reply_to=['another@example.com'],
             headers={'Message-ID': 'foo'},
         )
-        return email1
-
 
 

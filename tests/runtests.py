@@ -6,6 +6,7 @@ import os
 import sys
 import nose
 
+
 def start(argv=None):
     sys.exitfunc = lambda: sys.stderr.write("Shutting down...\n")
 
@@ -16,6 +17,7 @@ def start(argv=None):
             "--cover-package=django_ses",
         ]
     nose.run_exit(argv=argv, defaultTest=os.path.abspath(os.path.dirname(__file__)))
+
 
 if __name__ == "__main__":
     start(sys.argv)

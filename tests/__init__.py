@@ -1,6 +1,8 @@
 from __future__ import absolute_import, unicode_literals
 import os
 
+import coverage
+
 test_runner = None
 old_config = None
 
