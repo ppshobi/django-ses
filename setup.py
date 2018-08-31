@@ -11,7 +11,7 @@ setuptools.setup(
     description="A Drop in Replacement for default django email backend based on Amazon SES",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/pypa/sampleproject",
+    url="https://github.com/ppshobi/django-ses",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
