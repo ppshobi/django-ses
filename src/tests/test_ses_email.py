@@ -21,8 +21,8 @@ class SesEmail(TestCase):
 
     @mock_ses
     def test_it_can_send_email_from_verified_email(self):
-        conn = boto3.client('ses', region_name='us-east-1')
-        conn.verify_email_identity(EmailAddress="from1@example.com")
+        client = boto3.client('ses', region_name='us-east-1', aws_access_key_id=settings.AWS_ACCESS_KEY, aws_secret_access_key=settings.AWS_SECRET_KEY)
+        client.verify_email_identity(EmailAddress="from1@example.com")
 
         email1 = self.create_email()
 
