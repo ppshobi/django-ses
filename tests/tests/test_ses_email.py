@@ -18,13 +18,13 @@ class SesEmail(TestCase):
     @mock_ses
     def test_it_can_send_email(self):
         conn = boto3.client('ses', region_name='us-east-1')
-        conn.verify_email_identity(EmailAddress="from1@shobi.in")
+        conn.verify_email_identity(EmailAddress="from1@example.com")
 
         email1 = EmailMessage(
             'Subject 1',
             'Body1 goes here',
-            'from1@shobi.in',
-            ['ppshobi@gmail.com'],
+            'from1@example.com',
+            ['to1@example.com', 'to2@example.com'],
             reply_to=['another@example.com'],
             headers={'Message-ID': 'foo'},
         )

@@ -3,6 +3,7 @@ import pprint
 import boto3
 from django.conf import settings
 from django.core.mail.backends.base import BaseEmailBackend
+from django.utils.html import strip_tags
 
 
 class SesBackend(BaseEmailBackend):
@@ -24,7 +25,7 @@ class SesBackend(BaseEmailBackend):
                         },
                         'Text': {
                             'Charset': 'utf-8',
-                            'Data': mail.body,
+                            'Data': strip_tags(mail.body),
                         }
                     },
                     'Subject': {
