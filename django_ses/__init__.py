@@ -1,12 +1,15 @@
 import pprint
 
 import boto3
+from botocore.exceptions import ClientError
 from django.conf import settings
 from django.core.mail.backends.base import BaseEmailBackend
 from django.utils.html import strip_tags
 
 
 class SesBackend(BaseEmailBackend):
+    def __init__(self, fail_silently=False, **kwargs):
+        super(SesBackend, self).__init__(fail_silently=fail_silently, **kwargs)
 
     def send_messages(self, email_messages):
         for mail in email_messages:
@@ -41,5 +44,10 @@ class SesBackend(BaseEmailBackend):
                 aws_secret_access_key=settings.AWS_SECRET_KEY,
                 region_name=settings.AWS_REGION_NAME or None
             )
+            try:
+                return client.send_email(**email)
+            except ClientError as e:
+                if not self.fail_silently:
+                    raise e
 
-            return client.send_email(**email)
+
