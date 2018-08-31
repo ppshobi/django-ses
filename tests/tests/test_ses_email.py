@@ -1,9 +1,11 @@
 import boto3
+from botocore.exceptions import ClientError
 from django.conf import settings
 from django.core import mail
 from django.core.mail import EmailMessage, send_mail
 from django.test import TestCase
 from moto import mock_ses
+from moto.ses.exceptions import MessageRejectedError
 
 
 class SesEmail(TestCase):
@@ -16,7 +18,7 @@ class SesEmail(TestCase):
         self.assertEquals(settings.EMAIL_BACKEND, 'django_ses.SesBackend')
 
     @mock_ses
-    def test_it_can_send_email(self):
+    def test_it_can_send_email_from_verified_email(self):
         conn = boto3.client('ses', region_name='us-east-1')
         conn.verify_email_identity(EmailAddress="from1@example.com")
 
@@ -30,3 +32,16 @@ class SesEmail(TestCase):
         )
 
         self.assertIsNotNone(email1.send())
+
+    @mock_ses
+    def test_it_raises_exception_for_unverified_emails(self):
+        email1 = EmailMessage(
+            'Subject 1',
+            'Body1 goes here',
+            'from1@example.com',
+            ['to1@example.com', 'to2@example.com'],
+            reply_to=['another@example.com'],
+            headers={'Message-ID': 'foo'},
+        )
+        self.assertRaises(ClientError, lambda: email1.send())
+
