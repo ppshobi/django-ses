@@ -8,7 +8,11 @@ python:
   - "3.7-dev"  # 3.7 development branch
 # command to install dependencies
 install:
-  - pip3 install -r requirements_test.txt
+  - pip install -r requirements_test.txt
+  - pip install codecov
 # command to run tests
 script:
-  -  python runtests.py
+  - coverage run runtests.py
+
+after_success:
+  - codecov
