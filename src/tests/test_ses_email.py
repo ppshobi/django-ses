@@ -21,38 +21,34 @@ class SesEmail(TestCase):
 
     @mock_ses
     def test_it_can_send_email_from_verified_email(self):
-        client = boto3.client('ses', region_name='us-east-1', aws_access_key_id=settings.AWS_ACCESS_KEY, aws_secret_access_key=settings.AWS_SECRET_KEY)
-        client.verify_email_identity(EmailAddress="from1@example.com")
+        self.setup_boto3_client()
+        email = self.create_email()
 
-        email1 = self.create_email()
-
-        self.assertIsNotNone(email1.send())
+        self.assertIsNotNone(email.send())
 
     @mock_ses
     def test_it_raises_exception_for_unverified_emails(self):
-        email1 = self.create_email()
-        self.assertRaises(ClientError, lambda: email1.send())
+        email = self.create_email()
 
-    @mock_ses
-    def test_it_doesnt_raises_exception_if_fail_silently_is_true(self):
-        email1 = self.create_email()
+        self.assertRaises(ClientError, lambda: email.send())
+
+    def test_it_doesnt_raise_exception_if_fail_silently_is_true(self):
+        email = self.create_email()
         try:
-            email1.send(fail_silently=True)
+            email.send(fail_silently=True)
         except ClientError as e:
             self.fail("it raised error even when fail silently is used")
+        else:
+            self.assertTrue(True, msg="test passed because it failed silently")
 
     @mock_ses
     def test_send_email_function(self):
-        client = boto3.client('ses', region_name='us-east-1', aws_access_key_id=settings.AWS_ACCESS_KEY,
-                              aws_secret_access_key=settings.AWS_SECRET_KEY)
-        client.verify_email_identity(EmailAddress="from1@example.com")
-        self.assertIsNotNone(send_mail(subject="Test Subject", message="Message", from_email="from1@example.com", recipient_list=['to@example.com']))
+        self.setup_boto3_client()
+        self.assertIsNotNone(send_mail(subject="Test Subject", message="Message", from_email="from@example.com", recipient_list=['to@example.com']))
 
     @mock_ses
     def test_send_mass_email_function(self):
-        client = boto3.client('ses', region_name='us-east-1', aws_access_key_id=settings.AWS_ACCESS_KEY,
-                              aws_secret_access_key=settings.AWS_SECRET_KEY)
-        client.verify_email_identity(EmailAddress="from@example.com")
+        self.setup_boto3_client()
 
         message1 = ('Subject here', 'Here is the message', 'from@example.com', ['first@example.com', 'other@example.com'])
         message2 = ('Another Subject', 'Here is another message', 'from@example.com', ['second@test.com'])
@@ -62,11 +58,16 @@ class SesEmail(TestCase):
     def test_it_can_return_an_email_backend(self):
         self.assertTrue(isinstance(django_ses.SesBackend(), BaseEmailBackend))
 
+    def setup_boto3_client(self):
+        client = boto3.client('ses', region_name='us-east-1', aws_access_key_id=settings.AWS_ACCESS_KEY,
+                              aws_secret_access_key=settings.AWS_SECRET_KEY)
+        client.verify_email_identity(EmailAddress="from@example.com")
+
     def create_email(self):
         return EmailMessage(
             'Subject 1',
             'Body1 goes here',
-            'from1@example.com',
+            'from@example.com',
             ['to1@example.com', 'to2@example.com'],
             reply_to=['another@example.com'],
             headers={'Message-ID': 'foo'},
