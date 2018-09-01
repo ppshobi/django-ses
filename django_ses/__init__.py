@@ -14,34 +14,16 @@ class SesBackend(BaseEmailBackend):
     def send_messages(self, email_messages):
         client = self.get_ses_client()
         for mail in email_messages:
-
             email = {
-                'Destination': {
-                    'ToAddresses': mail.to,
-                    'CcAddresses': mail.cc,
-                    'BccAddresses': mail.bcc
-                },
-                'Message': {
-                    'Body': {
-                        'Html': {
-                            'Charset': 'utf-8',
-                            'Data': mail.body,
-                        },
-                        'Text': {
-                            'Charset': 'utf-8',
-                            'Data': strip_tags(mail.body),
-                        }
-                    },
-                    'Subject': {
-                        'Charset': 'utf-8',
-                        'Data': mail.subject,
-                    },
+                'Destinations': mail.recipients(),
+                'RawMessage': {
+                    'Data': mail.message().as_bytes(linesep='\r\n'),
                 },
                 'Source': mail.from_email,
             }
 
             try:
-                return client.send_email(**email)
+                return client.send_raw_email(**email)
             except ClientError as e:
                 if not self.fail_silently:
                     raise e

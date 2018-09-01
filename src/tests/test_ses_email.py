@@ -1,3 +1,5 @@
+from tempfile import NamedTemporaryFile
+
 import boto3
 from botocore.exceptions import ClientError
 from django.conf import settings
@@ -23,6 +25,14 @@ class SesEmail(TestCase):
     def test_it_can_send_email_from_verified_email(self):
         self.setup_boto3_client()
         email = self.create_email()
+
+        self.assertIsNotNone(email.send())
+
+    @mock_ses
+    def test_it_can_send_attachment(self):
+        self.setup_boto3_client()
+        email = self.create_email()
+        email.attach('Test.txt', open('src/tests/stubs/test.txt').read())
 
         self.assertIsNotNone(email.send())
 
