@@ -31,7 +31,7 @@ class SesBackend(BaseEmailBackend):
     def get_ses_client(self):
         return boto3.client(
             'ses',
-            aws_access_key_id=settings.AWS_ACCESS_KEY,
-            aws_secret_access_key=settings.AWS_SECRET_KEY,
-            region_name=settings.AWS_REGION_NAME or self.DEFAULT_SES_REGION
+            aws_access_key_id=settings.SES_ACCESS_KEY,
+            aws_secret_access_key=settings.SES_SECRET_KEY,
+            region_name=settings.SES_REGION_NAME or self.DEFAULT_SES_REGION
         )

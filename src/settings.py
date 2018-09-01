@@ -59,6 +59,6 @@ USE_TZ = True
 
 
 EMAIL_BACKEND = 'django_ses'
-AWS_ACCESS_KEY = 'xxx'
-AWS_SECRET_KEY = 'xxx'
-AWS_REGION_NAME = 'us-east-1'
+SES_ACCESS_KEY = 'xxx'
+SES_SECRET_KEY = 'xxx'
+SES_REGION_NAME = 'us-east-1'

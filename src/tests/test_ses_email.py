@@ -69,8 +69,8 @@ class SesEmail(TestCase):
         self.assertTrue(isinstance(django_ses.SesBackend(), BaseEmailBackend))
 
     def setup_boto3_client(self):
-        client = boto3.client('ses', region_name='us-east-1', aws_access_key_id=settings.AWS_ACCESS_KEY,
-                              aws_secret_access_key=settings.AWS_SECRET_KEY)
+        client = boto3.client('ses', region_name='us-east-1', aws_access_key_id=settings.SES_ACCESS_KEY,
+                              aws_secret_access_key=settings.SES_SECRET_KEY)
         client.verify_email_identity(EmailAddress="from@example.com")
 
     def create_email(self):
