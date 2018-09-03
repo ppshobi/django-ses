@@ -6,6 +6,7 @@ env:
   - DJANGO_VERSION=2.0
   - DJANGO_VERSION=2.1
 
+
 python:
   - "3.4"
   - "3.5"
@@ -18,9 +19,13 @@ install:
   - pip install -q Django==$DJANGO_VERSION
   - pip install -r requirements_test.txt
   - pip install codecov
+
+matrix:
+  exclude:
+    - python: "3.4"
+      env: DJANGO_VERSION=2.1
 # command to run tests
 script:
   - coverage run runtests.py
-
 after_success:
   - codecov
