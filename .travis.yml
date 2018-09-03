@@ -27,6 +27,5 @@ matrix:
 # command to run tests
 script:
   - coverage run runtests.py
-
 after_success:
   - codecov
