@@ -21,7 +21,7 @@ More over if your application is hosted in AWS first ~60000 emails are free ever
 ### Installation
 This package is available via pip, So install it using pip
 
-`pip install django-ses`
+`pip install django_ses_email_backend`
 
 and add it in your INSTALLED_APPS section of settings.py
 ```
