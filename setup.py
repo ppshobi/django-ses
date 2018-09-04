@@ -15,7 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires=[
        'boto3>=1.8.5',
-       'Django>=2.0',
+       'Django>=1.9',
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
