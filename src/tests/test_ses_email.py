@@ -65,9 +65,6 @@ class SesEmail(TestCase):
 
         self.assertIsNotNone(send_mass_mail((message1, message2), fail_silently=False))
 
-    def test_it_can_return_an_email_backend(self):
-        self.assertTrue(isinstance(django_ses.SesBackend(), BaseEmailBackend))
-
     def setup_boto3_client(self):
         client = boto3.client('ses', region_name='us-east-1', aws_access_key_id=settings.SES_ACCESS_KEY,
                               aws_secret_access_key=settings.SES_SECRET_KEY)
