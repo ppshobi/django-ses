@@ -16,6 +16,7 @@ python:
   - "3.7-dev"  # 3.7 development branch
 # command to install dependencies
 install:
+  - export BOTO_CONFIG=/dev/null
   - pip install -q Django==$DJANGO_VERSION
   - pip install -r requirements_test.txt
   - pip install codecov
