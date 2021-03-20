@@ -17,7 +17,7 @@ docutils==0.14
 ecdsa==0.13
 future==0.16.0
 idna==2.7
-Jinja2==2.10
+Jinja2==2.11.3
 jmespath==0.9.3
 jsondiff==1.1.1
 jsonpickle==0.9.6
