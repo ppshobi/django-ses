@@ -6,7 +6,7 @@ coverage>=4.5.1
 Django>=2.0
 asn1crypto==0.24.0
 aws-xray-sdk==0.95
-certifi==2018.8.24
+certifi==2022.12.7
 cffi==1.11.5
 chardet==3.0.4
 cookies==2.2.1
